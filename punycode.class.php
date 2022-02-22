@@ -23,7 +23,7 @@
  * SOFTWARE.
  */
 
-function_exists('mb_internal_encoding') or die('unsupported dependency, mbstring');
+use Exception;
 
 class Punycode
 {
@@ -35,6 +35,13 @@ class Punycode
 	const DAMP = 700;
 	const SKEW = 38;
 	const DELIMITER = '-';
+	
+	public function __construct() {
+		if(!function_exists('mb_internal_encoding'))
+		{
+			throw new Exception("PunycodeException.UNSUPPORTED_DEPENDENCY_MBSTRING");
+		}
+	}
 
 	//Punycode::::encodeHostName() corresponds to idna_toASCII('xärg.örg');
 	public static function encodeHostName($hostname)
